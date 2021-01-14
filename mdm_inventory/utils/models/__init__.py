@@ -1,0 +1,1 @@
+from .genery import BasicModel , ModelDate

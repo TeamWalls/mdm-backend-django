@@ -1,0 +1,7 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=mdm_inventory
+POSTGRES_USER=wUaeikBZTxiXNdbrEYSRCqOzhwdYhSKw
+POSTGRES_PASSWORD=18uLDVlPl7dWKkxODG1o0W4177t4mRKQTGIeP8R4JjKHuaUWLccX9ix3ekALdfld
