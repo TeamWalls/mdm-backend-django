@@ -72,6 +72,7 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "corsheaders",
+    'graphene_django'
 ]
 
 LOCAL_APPS = [
@@ -308,3 +309,11 @@ REST_FRAMEWORK = {
 CORS_URLS_REGEX = r"^/api/.*$"
 # Your stuff...
 # ------------------------------------------------------------------------------
+GRAPHENE = {
+    'SCHEMA': 'mdm_inventory.proyect_schema.schema',
+    'MIDDLEWARE': [
+        'graphql_jwt.middleware.JSONWebTokenMiddleware',
+        'graphene_django.debug.DjangoDebugMiddleware',
+    ],
+    "GRAPHQL_URL": "/inventory"
+}

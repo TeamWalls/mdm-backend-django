@@ -1,14 +1,16 @@
 import graphene
 
 # Querys
-from mdm_inventory.users.graphql.query import QueryUserGeneric
+from mdm_inventory.clients.graphql.query import QueryClient
+from mdm_inventory.users.graphql.query import QueryUsers
 
 #Mutations
 from mdm_inventory.users.graphql.mutation import MutationUser
 from mdm_inventory.clients.graphql.mutation import MutationClient
 
 class Query(
-        QueryUserGeneric,
+        QueryClient,
+        QueryUsers,
         graphene.ObjectType
 ):
     pass
@@ -21,4 +23,4 @@ class Mutation(
     pass
 
 
-schema = graphene.Schema(query=Query , mutation=Mutation )
+schema = graphene.Schema(query=Query, mutation=Mutation ,)

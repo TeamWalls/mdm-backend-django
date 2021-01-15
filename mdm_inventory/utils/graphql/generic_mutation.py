@@ -143,7 +143,7 @@ class GenericMutationSerializer(graphene.Mutation):
             instance.delete()
             msg = "success"
             status = "200"
-            return id_intance , msg, status
+            return msg, status
         else:
             serializer = cls.serializer_class(
                 data=data,

@@ -7,9 +7,18 @@ from django.core.exceptions import ObjectDoesNotExist, ValidationError
 import graphene
 import graphql_jwt
 
+#models
+from mdm_inventory.users.models import User
 
 # types
 from mdm_inventory.users.graphql.types import UserType
+
+#serializers
+from mdm_inventory.users.serializers import (
+   UserCreateSerializer,
+   UserUpdateSerializer,
+   UserCreateSerializer
+)
 
 # utils
 from mdm_inventory.utils.graphql.generic_mutation import GenericMutationSerializer
@@ -34,7 +43,7 @@ class CreateUser(GenericMutationSerializer):
     class Meta:
         model = Client
         description = 'CreateClient in data base'
-        serializer_class = CreateClientSerializer
+        serializer_class = UserCreateSerializer
 
     @classmethod
     def mutate(cls, root, info, **kwargs):
@@ -42,43 +51,42 @@ class CreateUser(GenericMutationSerializer):
         message = _("Usuario Creado")
         return cls(user=user, message=str(message), status=status)
 
-# class UpdateUser(GenericMutationSerializer):
+class UpdateUser(GenericMutationSerializer):
+    
+    class Arguments:
+        input = InputUserData(description="Input User Data")
 
-#     class Arguments:
-#         id = graphene.ID(required=True, description=_("ID Client object"))
-#         input = InputClientData(description="Input user data")
+    user = graphene.Field(ClientType)
 
-#     client = graphene.Field(ClientType)
+    class Meta:
+        model = Client
+        description = 'CreateClient in data base'
+        serializer_class = UserUpdateSerializer
+        update = True
 
-#     class Meta:
-#         model = Client
-#         description = 'CreateClient in data base'
-#         serializer_class = ClientUpdateSerializer
-#         update = True
+    @classmethod
+    def mutate(cls, root, info, **kwargs):
+        user, message, status = cls.perform_mutation(root, info, **kwargs)
+        message = _("Usuario Actualizado ")
+        return cls(user=user, message=str(message), status=status)
 
-#     @classmethod
-#     def mutate(cls, root, info, **kwargs):
-#         client, message, status = cls.perform_mutation(root, info, **kwargs)
-#         message = _("Cliente Actualizado")
-#         return cls(client=client, message=str(message), status=status)
 
-# class InputDisableClient(graphene.InputObjectType):
-#     id = graphene.ID(required=True, description=_("ID Client object"))
+class InputDisableData(graphene.InputObjectType):
+    id = graphene.Int(description="Id User ref pk")
 
-# class DisableClient(GenericMutationSerializer):
-#     class Arguments:
-#         input = InputDisableClient(description="Input user data")
+class DeleterUser(GenericMutationSerializer):
+    
+    class Arguments:
+        input = InputDisableData(description="Input User Data")
 
-#     client = graphene.Field(ClientType)
+    class Meta:
+        model = Client
+        description = 'Deleter in data base'
+        delete = True
 
-#     class Meta:
-#         model= Client
-#         description = 'CreateClient in data base'
-#         serializer_class = CreateClientSerializer
-#         update = True
+    @classmethod
+    def mutate(cls, root, info, **kwargs):
+        message, status = cls.perform_mutation(root, info, **kwargs)
+        message = _("Usuario Eliminado")
+        return cls(message=str(message), status=status)
 
-#     @classmethod
-#     def mutate(cls, root, info, **kwargs):
-#         client, message, status = cls.perform_mutation(root, info, **kwargs)
-#         message = _("Cliente Desactivado")
-#         return cls(message=str(message), status=status)

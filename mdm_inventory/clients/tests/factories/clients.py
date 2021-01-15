@@ -3,7 +3,7 @@ import factory
 import factory.fuzzy
 
 # Models
-from mdm_inventory.users.models import Client
+from mdm_inventory.clients.models import Client
 
 #factorie
 from mdm_inventory.address.tests.factories import AddressFactory
