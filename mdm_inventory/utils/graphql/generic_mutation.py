@@ -139,7 +139,6 @@ class GenericMutationSerializer(graphene.Mutation):
         # TODO CHECK AND REFACTOR
         # ! There is no serializer used
         elif cls.delete:
-            id_intance = intance.id
             instance.delete()
             msg = "success"
             status = "200"

@@ -23,11 +23,5 @@ class CustomUserAdmin(UserAdmin):
         }),
     )
     search_fields = ('email', 'username',)
-    # # I overwrite the save_model method for creating and sending mail
-
-    # def save_model(self, request, obj, form, change):
-    #     super().save_model(request, obj, form, change)
-
-    # def delete_queryset(self, request, queryset):
 
 admin.site.register(User, CustomUserAdmin)

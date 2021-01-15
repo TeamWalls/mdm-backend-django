@@ -16,7 +16,7 @@ class Query(
     pass
 
 class Mutation(
-    MutationGenericUsers,
+    MutationUser,
     MutationClient,
     graphene.ObjectType
 ):

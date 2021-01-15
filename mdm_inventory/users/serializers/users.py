@@ -16,9 +16,8 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
 # User model
-from mdm_inventory.users.models import User, Profile
+from mdm_inventory.users.models import User
 
-from mdm_inventory.utils.functions import validate_token 
 
 class UserCreateSerializer(serializers.ModelSerializer):
     """
@@ -37,9 +36,11 @@ class UserCreateSerializer(serializers.ModelSerializer):
         ],
     )
 
+    password = serializers.CharField(min_length=8, max_length=64,)
+    password_confirmation = serializers.CharField(min_length=8, max_length=64,)
+
     class Meta:
         model = User
-        fields = "__all__"
         read_only_fields = ('id',)
         exclude = ("is_verified", "is_staff","is_superuser")
 
@@ -67,7 +68,7 @@ class UserUpdateSerializer(UserCreateSerializer):
         serialzer for updating user fields 
     """
     class Meta(UserCreateSerializer.Meta):
-        exclude = ("is_verified", "is_staff","is_superuser",)
+        pass
         
     def validate(self , data):
         data.pop('password_confirmation' , None)
@@ -90,7 +91,7 @@ class UserUpdateSerializer(UserCreateSerializer):
         is_manager = validated_data.pop("is_manager", None)
         is_supervisor = validated_data.pop("is_supervisor", None)
         is_cashier = validated_data.pop("is_cashier", None)
-        picture = validated_data.pop("picture", None)
+        profile_picture = validated_data.pop("profile_picture", None)
 
         if username is not None:
             instance.username = username
@@ -106,12 +107,9 @@ class UserUpdateSerializer(UserCreateSerializer):
          
         if is_cashier is not None :
             instance.is_cashier = is_cashier       
-        
-        if is_superuser is not None:
-            instance.is_superuser = is_superuser
 
-        if picture is not None:    
-            instance.picture = picture
+        if profile_picture is not None:    
+            instance.profile_picture = profile_picture
 
         instance.save()    
         return instance
