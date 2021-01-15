@@ -79,7 +79,8 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "mdm_inventory.users.apps.UsersConfig",
     "mdm_inventory.address.apps.AddressConfig",
-    "mdm_inventory.clients.apps.ClientConfig"
+    "mdm_inventory.clients.apps.ClientConfig",
+    "mdm_inventory.products.apps.ProductConfig"
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
