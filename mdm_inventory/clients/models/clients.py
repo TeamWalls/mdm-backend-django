@@ -14,6 +14,15 @@ class Client(models.Model):
     )
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)
     full_name = models.CharField(_("Nombre completo"), max_length=50)
+    
+    def clean(self):
+        super().clean()
+        self.full_name = self.first_name + " " + self.last_name
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
+    
     address = models.OneToOneField("address.Address", verbose_name=_("client_address"), on_delete=models.CASCADE)
 
     def __str__(self):

@@ -28,6 +28,7 @@ class User(ModelDate , AbstractUser):
     #permissions
     is_manager = models.BooleanField(_("Gerente") , default=False)
     is_cashier = models.BooleanField(_("Cajero") , default=False)
+    is_supervisor = models.BooleanField(_("SuperVisor") , default=False)
     is_superuser = models.BooleanField(_("Superusuario"), default=False)
     is_verified = models.BooleanField(
         _('Verificado'),

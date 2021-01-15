@@ -25,3 +25,9 @@ django-cors-headers==3.6.0 # https://github.com/adamchainz/django-cors-headers
 
 #Graphene
 graphene>=2.0 #https://github.com/graphql-python/graphene
+graphene-django==2.13.0
+django-graphql-jwt==0.3.1
+graphene-django-optimizer==0.7.0
+graphql-core==2.3.2
+graphql-relay==2.0.1
+django-graphiql-debug-toolbar==0.1.4
