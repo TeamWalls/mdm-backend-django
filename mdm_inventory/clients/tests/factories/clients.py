@@ -5,9 +5,6 @@ import factory.fuzzy
 # Models
 from mdm_inventory.clients.models import Client
 
-#factorie
-from mdm_inventory.address.tests.factories import AddressFactory
-
 class ClientFactory(factory.django.DjangoModelFactory):
     class Meta:
         model =  Client
@@ -18,6 +15,6 @@ class ClientFactory(factory.django.DjangoModelFactory):
     dni = factory.Sequence(lambda n: "123456789%s" % n)
     phone_number = factory.Sequence(lambda n: '123-555-%04d' % n)
     full_name = factory.LazyAttribute(lambda a: '{}'.format(a.first_name))
-    address = factory.SubFactory(AddressFactory)
+    is_active = True
     def __str__(self):
         return f'{self.first_name } - {self.dni}'

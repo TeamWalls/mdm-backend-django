@@ -8,7 +8,7 @@ from mdm_inventory.address.models import Address
 from mdm_inventory.address.graphql.types import AddressType
 
 class QueryAddress(graphene.ObjectType):
-    Address = graphene.List(AddressType)
+    address = graphene.List(AddressType)
 
     def resolve_address(root, info):
         return Address.objects.filter(is_active=True)

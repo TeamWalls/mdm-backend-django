@@ -32,8 +32,7 @@ class InputClientData(graphene.InputObjectType):
     last_name = graphene.String(description="last name")
     dni = graphene.String(description="DNI")
     phone_number = graphene.String(description="phone number")
-    full_name = graphene.String(description="full name")
-    address = graphene.Int(description="ID address relate", required=False)
+    full_name = graphene.String(description="full name" )
 
 
 class CreateClient(GenericMutationSerializer):

@@ -26,7 +26,6 @@ class CreateClientSerializer(serializers.ModelSerializer):
             'dni',
             'phone_number',
             'full_name',
-            'address',
         )
 
     def validate(self, data):

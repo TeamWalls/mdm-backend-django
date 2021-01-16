@@ -49,6 +49,7 @@ class CreateProduct(GenericMutationSerializer):
         serializer_class = CreateProductSerializer
 
     @classmethod
+    @login_required
     def mutate(cls, root, info, **kwargs):
         product, message, status = cls.perform_mutation(root, info, **kwargs)
         message = _("Producto Agregado")
@@ -70,6 +71,7 @@ class UpdateProduct(GenericMutationSerializer):
         update = True
 
     @classmethod
+    @login_required
     def mutate(cls, root, info, **kwargs):
         product, message, status = cls.perform_mutation(root, info, **kwargs)
         message = _("Producto Actualizado")
