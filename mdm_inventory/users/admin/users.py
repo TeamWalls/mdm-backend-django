@@ -11,23 +11,17 @@ class CustomUserAdmin(UserAdmin):
     # form = CustomUserChangeForm
     model = User
     list_display = ('id', 'email', 'is_verified', 'is_staff',)
-    list_filter = ('is_verified','is_manager','is_cashier', 'is_superuser',)
+    list_filter = ('is_verified','is_manager','is_cashier', 'is_superuser','is_supervisor')
     fieldsets = (
         (None, {'fields': ('email', 'username', 'password', 'profile_picture', 'is_active')}),
-        ('Permissions', {'fields': ('is_verified', 'is_staff', 'is_superuser','is_manager','is_cashier',)}),
+        ('Permissions', {'fields': ('is_verified', 'is_staff', 'is_supervisor', 'is_superuser','is_manager','is_cashier',)}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'username', 'password1', 'password2', 'is_verified', 'is_staff', 'is_superuser', 'profile_picture','is_manager','is_cashier',)
+            'fields': ('email', 'username', 'password1', 'password2', 'is_verified', 'is_staff', 'is_superuser', 'profile_picture','is_manager','is_cashier','is_supervisor')
         }),
     )
     search_fields = ('email', 'username',)
-    # # I overwrite the save_model method for creating and sending mail
-
-    # def save_model(self, request, obj, form, change):
-    #     super().save_model(request, obj, form, change)
-
-    # def delete_queryset(self, request, queryset):
 
 admin.site.register(User, CustomUserAdmin)

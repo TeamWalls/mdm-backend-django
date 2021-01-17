@@ -4,6 +4,7 @@ Base settings to build other settings files upon.
 from pathlib import Path
 
 import environ
+from django.utils import timezone
 
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # mdm_inventory/
@@ -72,11 +73,14 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "corsheaders",
+    'graphene_django'
 ]
 
 LOCAL_APPS = [
     "mdm_inventory.users.apps.UsersConfig",
-    "mdm_inventory.address.apps.AddressConfig"
+    "mdm_inventory.address.apps.AddressConfig",
+    "mdm_inventory.clients.apps.ClientConfig",
+    "mdm_inventory.products.apps.ProductConfig"
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -87,13 +91,6 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 # https://docs.djangoproject.com/en/dev/ref/settings/#migration-modules
 MIGRATION_MODULES = {"sites": "mdm_inventory.contrib.sites.migrations"}
 
-# AUTHENTICATION
-# ------------------------------------------------------------------------------
-# https://docs.djangoproject.com/en/dev/ref/settings/#authentication-backends
-AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
-]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
 AUTH_USER_MODEL = "users.User"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
@@ -132,10 +129,10 @@ MIDDLEWARE = [
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.common.BrokenLinkEmailsMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'django.contrib.auth.middleware.AuthenticationMiddleware'
 ]
 
 # STATIC
@@ -307,3 +304,33 @@ REST_FRAMEWORK = {
 CORS_URLS_REGEX = r"^/api/.*$"
 # Your stuff...
 # ------------------------------------------------------------------------------
+GRAPHENE = {
+    'SCHEMA': 'mdm_inventory.proyect_schema.schema',
+    'MIDDLEWARE': [
+        'graphql_jwt.middleware.JSONWebTokenMiddleware',
+    ],
+    "GRAPHQL_URL": "/inventory"
+}
+
+
+JWT_PUBLIC_KEY = env("JWT_PUBLIC_KEY").replace("\\n", "\n")
+JWT_PRIVATE_KEY = env("JWT_PRIVATE_KEY").replace("\\n", "\n")
+
+# GRAPHQL_JWT = {
+#     'JWT_VERIFY_EXPIRATION': True,
+#     'JWT_PUBLIC_KEY': JWT_PUBLIC_KEY,
+#     "JWT_PRIVATE_KEY": env("JWT_PRIVATE_KEY").replace("\\n", "\n"),
+#     'JWT_VERIFY_EXPIRATION': True,
+#     'JWT_EXPIRATION_DELTA': timezone.timedelta(days=1),
+#     'JWT_REFRESH_EXPIRATION_DELTA': timezone.timedelta(days=7),
+#     'JWT_ALGORITHM': 'RS256',
+# }
+
+# AUTHENTICATION
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#authentication-backends
+AUTHENTICATION_BACKENDS = [
+    'graphql_jwt.backends.JSONWebTokenBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
